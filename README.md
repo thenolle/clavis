@@ -425,7 +425,8 @@ Clavis/
 
 # License
 
-This project is licensed under the terms of the license included in the repository.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  
+TL;DR: You are free to use, modify, and distribute this software for any purpose, but it comes with no warranty.
 
 ---
 
