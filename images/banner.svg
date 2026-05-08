@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 600">
+  <defs>
+    <linearGradient id="fade" x1="0" x2="1">
+      <stop offset="0%" stop-color="#fefefe" stop-opacity="0" />
+      <stop offset="50%" stop-color="#fefefe" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#fefefe" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect x="80" y="80" width="1760" height="440" rx="28" fill="#1a1a1a" />
+  <rect x="80" y="80" width="1760" height="440" rx="28" fill="none" stroke="#fefefe" stroke-width="2" />
+  <rect x="100" y="100" width="1720" height="400" rx="20" fill="url(#fade)" />
+  <text x="140" y="250" fill="#fefefe" font-size="132" font-family="Consolas, monospace" font-weight="700" letter-spacing="8">CLAVIS</text>
+  <text x="145" y="320" fill="#fefefe" font-size="32" font-family="Consolas, monospace" opacity="0.9">Native keyboard &amp; mouse sound simulator for Windows</text>
+  <text x="145" y="360" fill="#fefefe" font-size="24" font-family="Consolas, monospace" opacity="0.7">Open source on <tspan fill="#fefefe" font-weight="700">GitHub</tspan></text>
+  <g transform="translate(1160 150)">
+    <rect width="560" height="260" rx="22" fill="none" stroke="#fefefe" stroke-width="2" />
+    <g fill="#fefefe">
+      <rect x="40" y="40" width="60" height="60" rx="8" />
+      <rect x="125" y="40" width="60" height="60" rx="8" />
+      <rect x="210" y="40" width="60" height="60" rx="8" />
+      <rect x="295" y="40" width="60" height="60" rx="8" />
+      <rect x="380" y="40" width="60" height="60" rx="8" />
+      <rect x="465" y="40" width="60" height="60" rx="8" />
+      <rect x="40" y="125" width="60" height="60" rx="8" />
+      <rect x="125" y="125" width="60" height="60" rx="8" />
+      <rect x="210" y="125" width="60" height="60" rx="8" />
+      <rect x="295" y="125" width="60" height="60" rx="8" />
+      <rect x="380" y="125" width="60" height="60" rx="8" />
+      <rect x="465" y="125" width="60" height="60" rx="8" />
+      <rect x="70" y="205" width="420" height="26" rx="13" />
+    </g>
+  </g>
+
+</svg>

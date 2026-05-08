@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 90">
+  <defs><style>text{font-family:"Consolas","Courier New",monospace;fill:#fefefe;font-size:42px;letter-spacing:2px;dominant-baseline:middle;text-anchor:middle}</style></defs>
+  <path id="line0"><animate id="d0" dur="4200ms" attributeName="d" begin="0s;d3.end" fill="remove" values="M0,45 H0; M0,45 H900; M0,45 H900; M0,45 H0" keyTimes="0;0.28;0.88;1" /></path>
+  <text x="50%" y="50%"><textPath xlink:href="#line0">Clavis</textPath></text>
+  <path id="line1"><animate id="d1" dur="5200ms" attributeName="d" begin="d0.end" fill="remove" values="M0,45 H0; M0,45 H900; M0,45 H900; M0,45 H0" keyTimes="0;0.28;0.88;1" /></path>
+  <text x="50%" y="50%"><textPath xlink:href="#line1">Lightweight Win32 Sound Simulator</textPath></text>
+  <path id="line2"><animate id="d2" dur="5000ms" attributeName="d" begin="d1.end" fill="remove" values="M0,45 H0; M0,45 H900; M0,45 H900; M0,45 H0" keyTimes="0;0.28;0.88;1" /></path>
+  <text x="50%" y="50%"><textPath xlink:href="#line2">Keyboard &amp; Mouse Audio Feedback</textPath></text>
+  <path id="line3"><animate id="d3" dur="5600ms" attributeName="d" begin="d2.end" fill="remove" values="M0,45 H0; M0,45 H900; M0,45 H900; M0,45 H0" keyTimes="0;0.24;0.92;1" /></path>
+  <text x="50%" y="50%"><textPath xlink:href="#line3">Minimal - Native - Customizable</textPath></text>
+</svg>

@@ -1,0 +1,28 @@
+{
+  "name": "NK Cream",
+  "key_define_type": "multi",
+  "defines": {
+    "default":        "a.wav",
+
+    "KEY_A": "a.wav", "KEY_B": "b.wav", "KEY_C": "c.wav",
+    "KEY_D": "d.wav", "KEY_E": "e.wav", "KEY_F": "f.wav",
+    "KEY_G": "g.wav", "KEY_H": "h.wav", "KEY_I": "i.wav",
+    "KEY_J": "j.wav", "KEY_K": "k.wav", "KEY_L": "l.wav",
+    "KEY_M": "m.wav", "KEY_N": "n.wav", "KEY_O": "o.wav",
+    "KEY_P": "p.wav", "KEY_Q": "q.wav", "KEY_R": "r.wav",
+    "KEY_S": "s.wav", "KEY_T": "t.wav", "KEY_U": "u.wav",
+    "KEY_V": "v.wav", "KEY_W": "w.wav", "KEY_X": "x.wav",
+    "KEY_Y": "y.wav", "KEY_Z": "z.wav",
+
+    "KEY_LEFTBRACE":  "[.wav",
+    "KEY_RIGHTBRACE": "].wav",
+
+    "KEY_BACKSPACE": "backspace.wav",
+    "KEY_CAPSLOCK":  "capslock.wav",
+    "KEY_RETURN":    "enter.wav",
+    "KEY_LEFTSHIFT": "shift.wav",
+    "KEY_RIGHTSHIFT":"shift.wav",
+    "KEY_SPACE":     "space.wav",
+    "KEY_TAB":       "tab.wav"
+  }
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 500">
+  <text x="80" y="90" fill="#fefefe" font-size="58" font-family="Consolas, monospace" font-weight="700">FEATURES</text>
+  <g stroke="#fefefe" stroke-width="2" fill="none">
+    <rect x="80" y="150" width="300" height="250" rx="24" fill="#1a1a1a" />
+    <rect x="430" y="150" width="300" height="250" rx="24" fill="#1a1a1a" />
+    <rect x="780" y="150" width="300" height="250" rx="24" fill="#1a1a1a" />
+    <rect x="1130" y="150" width="300" height="250" rx="24" fill="#1a1a1a" />
+  </g>
+  <g fill="#fefefe" font-family="Consolas, monospace">
+    <text x="120" y="240" font-size="36">GLOBAL</text>
+    <text x="120" y="285" font-size="36">HOTKEYS</text>
+    <text x="470" y="240" font-size="36">CUSTOM</text>
+    <text x="470" y="285" font-size="36">SOUNDPACKS</text>
+    <text x="820" y="240" font-size="36">TRAY</text>
+    <text x="820" y="285" font-size="36">INTEGRATION</text>
+    <text x="1170" y="240" font-size="36">NATIVE</text>
+    <text x="1170" y="285" font-size="36">WIN32</text>
+  </g>
+</svg>
