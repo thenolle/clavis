@@ -9,6 +9,7 @@ BOOL g_muted        = FALSE;
 static HHOOK s_kbd_hook   = NULL;
 static HHOOK s_mouse_hook = NULL;
 static HWND  s_notify_wnd = NULL;
+static BOOL  s_key_down[256] = {0};   /* physical key state, used to drop auto-repeat */
 
 static LRESULT CALLBACK LLKeyProc(int nCode, WPARAM wp, LPARAM lp)
 {
@@ -38,11 +39,20 @@ static LRESULT CALLBACK LLKeyProc(int nCode, WPARAM wp, LPARAM lp)
             }
         }
 
-        if (!g_muted && s_notify_wnd) {
-            if (is_dn && g_hook_keydown)
-                PostMessageW(s_notify_wnd, WM_HOOK_KEY, (WPARAM)(ks->vkCode & 0xFFFF), 0);
-            else if (is_up && g_hook_keyup)
-                PostMessageW(s_notify_wnd, WM_HOOK_KEY, (WPARAM)((ks->vkCode & 0xFFFF) | (1 << 16)), 0);
+        if (is_dn || is_up) {
+            DWORD vk     = ks->vkCode & 0xFF;
+            BOOL  repeat = FALSE;
+
+            /* Track state even while muted so it never goes stale. */
+            if (is_dn) { repeat = s_key_down[vk]; s_key_down[vk] = TRUE; }
+            else       { s_key_down[vk] = FALSE; }
+
+            if (!g_muted && s_notify_wnd && !repeat) {
+                if (is_dn && g_hook_keydown)
+                    PostMessageW(s_notify_wnd, WM_HOOK_KEY, (WPARAM)vk, 0);
+                else if (is_up && g_hook_keyup)
+                    PostMessageW(s_notify_wnd, WM_HOOK_KEY, (WPARAM)(vk | (1 << 16)), 0);
+            }
         }
     }
     return CallNextHookEx(s_kbd_hook, nCode, wp, lp);
