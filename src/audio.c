@@ -66,7 +66,10 @@ static void play_wav(const unsigned char *data, unsigned int sz, int vol) {
         DWORD tag = *(DWORD *)(data + pos);
         DWORD csz = *(DWORD *)(data + pos + 4);
         pos += 8;
-        if (pos + csz > sz) break;
+        if (pos + csz > sz) {
+            if (tag == 0x61746164) csz = sz - pos;   /* truncated/streamed data chunk: use what we have */
+            else break;
+        }
         if (tag == 0x20746d66) {
             WAVEFORMAT *wf      = (WAVEFORMAT *)(data + pos);
             wfx.wFormatTag      = wf->wFormatTag;
@@ -75,6 +78,10 @@ static void play_wav(const unsigned char *data, unsigned int sz, int vol) {
             wfx.nAvgBytesPerSec = wf->nAvgBytesPerSec;
             wfx.nBlockAlign     = wf->nBlockAlign;
             if (csz >= 16) wfx.wBitsPerSample = *(WORD *)(data + pos + 14);
+            /* WAVE_FORMAT_EXTENSIBLE (0xFFFE): real format tag is the first WORD of the SubFormat GUID */
+            if (wfx.wFormatTag == 0xFFFE && csz >= 26)
+                wfx.wFormatTag = *(WORD *)(data + pos + 24);
+            wfx.cbSize = 0;
             got_fmt = TRUE;
         } else if (tag == 0x61746164) {
             pcm_src = data + pos;
@@ -83,6 +90,8 @@ static void play_wav(const unsigned char *data, unsigned int sz, int vol) {
         pos += csz + (csz & 1);
     }
     if (!got_fmt || !pcm_src || pcm_sz == 0) return;
+    if (wfx.nBlockAlign) pcm_sz -= pcm_sz % wfx.nBlockAlign;
+    if (pcm_sz == 0) return;
 
     EnterCriticalSection(&s_pick_cs);
     Slot *sl = NULL;
@@ -110,8 +119,18 @@ static void play_wav(const unsigned char *data, unsigned int sz, int vol) {
     memset(&sl->hdr, 0, sizeof(WAVEHDR));
     sl->hdr.lpData         = (LPSTR)pcm;
     sl->hdr.dwBufferLength = pcm_sz;
-    waveOutPrepareHeader(sl->hwo, &sl->hdr, sizeof(WAVEHDR));
-    waveOutWrite(sl->hwo, &sl->hdr, sizeof(WAVEHDR));
+    if (waveOutPrepareHeader(sl->hwo, &sl->hdr, sizeof(WAVEHDR)) != MMSYSERR_NOERROR) {
+        free(pcm); sl->pcm = NULL;
+        memset(&sl->hdr, 0, sizeof(sl->hdr));
+        sl->busy = FALSE;                 /* otherwise this slot is lost forever */
+        return;
+    }
+    if (waveOutWrite(sl->hwo, &sl->hdr, sizeof(WAVEHDR)) != MMSYSERR_NOERROR) {
+        waveOutUnprepareHeader(sl->hwo, &sl->hdr, sizeof(WAVEHDR));
+        free(pcm); sl->pcm = NULL;
+        memset(&sl->hdr, 0, sizeof(sl->hdr));
+        sl->busy = FALSE;
+    }
 }
 
 void audio_init(void) {

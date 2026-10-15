@@ -256,8 +256,30 @@ int sp_discover(const wchar_t *root, wchar_t names[][MAX_PACK_NAME], wchar_t dir
         if (count >= max_packs) break;
         wchar_t cfg[MAX_PATH];
         swprintf(cfg, MAX_PATH, L"%s\\%s\\config.json", root, fd.cFileName);
-        if (GetFileAttributesW(cfg) == INVALID_FILE_ATTRIBUTES) continue;
-        swprintf(dirs[count], MAX_PATH, L"%s\\%s", root, fd.cFileName);
+        if (GetFileAttributesW(cfg) != INVALID_FILE_ATTRIBUTES) {
+            swprintf(dirs[count], MAX_PATH, L"%s\\%s", root, fd.cFileName);
+        } else {
+            /* zip extracted as Soundpacks\\<name>\\<name>\\config.json - look one level deeper */
+            wchar_t sub[MAX_PATH];
+            WIN32_FIND_DATAW fd2;
+            BOOL found = FALSE;
+            swprintf(sub, MAX_PATH, L"%s\\%s\\*", root, fd.cFileName);
+            HANDLE h2 = FindFirstFileW(sub, &fd2);
+            if (h2 != INVALID_HANDLE_VALUE) {
+                do {
+                    if (!(fd2.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) continue;
+                    if (!wcscmp(fd2.cFileName,L".")||!wcscmp(fd2.cFileName,L"..")) continue;
+                    swprintf(cfg, MAX_PATH, L"%s\\%s\\%s\\config.json", root, fd.cFileName, fd2.cFileName);
+                    if (GetFileAttributesW(cfg) != INVALID_FILE_ATTRIBUTES) {
+                        swprintf(dirs[count], MAX_PATH, L"%s\\%s\\%s", root, fd.cFileName, fd2.cFileName);
+                        found = TRUE;
+                        break;
+                    }
+                } while (FindNextFileW(h2, &fd2));
+                FindClose(h2);
+            }
+            if (!found) continue;
+        }
         wcsncpy(names[count], fd.cFileName, MAX_PACK_NAME - 1);
         names[count][MAX_PACK_NAME - 1] = L'\0';
         count++;

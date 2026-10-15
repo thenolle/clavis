@@ -86,6 +86,13 @@ static void do_load_pack(int idx) {
         s_pack_sel    = idx;
         ui_set_selected_idx(idx);
         wchar_t msg[256];
+        const wchar_t *ext = (!s_pack.is_embedded && s_pack.sound_count > 0)
+                           ? wcsrchr(s_pack.sounds[0].sound_file, L'.') : NULL;
+        if (!s_pack.is_embedded && s_pack.sound_count > 0 &&
+            (!ext || _wcsicmp(ext, L".wav") != 0)) {
+            set_status_temp(L"Loaded, but pack isn't .wav - convert audio to WAV", g_theme.destructive);
+            return;
+        }
         swprintf(msg, 256, L"Loaded %s", s_pack.name);
         set_status_temp(msg, g_theme.success);
     } else {
